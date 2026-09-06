@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>学长资源站</title>
+  <meta name="description" content="实验室软件与学习资料分享站" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ======= 顶部导航 ======= -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-logo">🧭</span>
+        <span class="brand-name" id="nav-name">学长资源站</span>
+      </a>
+      <nav class="nav-links" id="nav-links"></nav>
+    </div>
+  </header>
+
+  <!-- ======= 首页大标题区 ======= -->
+  <section class="hero" id="top">
+    <h1 class="hero-title" id="site-name">学长资源站</h1>
+    <p class="hero-sub" id="site-sub">给实验室学弟学妹的软件与学习资料 · 全部免费</p>
+    <p class="hero-notice" id="site-notice"></p>
+    <div class="hero-search">
+      <input type="search" id="search-box" placeholder="🔍 搜索资源，比如：Keil、STM32、Python…" autocomplete="off" />
+    </div>
+    <!-- 分类按钮会自动生成 -->
+    <div class="cat-chips" id="cat-chips"></div>
+  </section>
+
+  <!-- ======= 资源卡片区 ======= -->
+  <main class="content">
+    <div class="section-title">
+      <h2>资源列表</h2>
+      <span class="section-count" id="res-count"></span>
+    </div>
+    <div class="cards" id="cards"></div>
+
+    <!-- 无结果提示（搜索/筛选时出现） -->
+    <div class="empty hidden" id="empty">
+      <p>没有找到符合条件的资源 😅</p>
+    </div>
+  </main>
+
+  <!-- ======= 页脚 ======= -->
+  <footer class="footer">
+    <p id="footer-text">学长资源站 · 免费分享给实验室的学弟学妹</p>
+  </footer>
+
+  <!-- 数据文件：改 data/resources.js 就能加内容（详见 README.md） -->
+  <script src="data/resources.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
