@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light" />
+<title>寻路演示 · BFS / A*</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;color:#1f2937;background:#f4f6f8;padding:18px}
+  h1{font-size:20px;margin:0 0 6px}
+  .lead{font-size:13.5px;color:#475569;line-height:1.9;margin-bottom:14px}
+  .lead b{color:#1d4ed8}
+  .wrap{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+  .controls{width:320px;flex:none}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  button{font-size:13px;padding:7px 12px;border-radius:8px;border:1px solid #d1d5db;background:#fff;cursor:pointer}
+  button:hover{background:#f8fafc}
+  button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+  button.primary{background:#16a34a;border-color:#16a34a;color:#fff}
+  button.primary:hover{background:#15803d}
+  .hint{font-size:12.5px;color:#64748b;line-height:1.9;background:#f8fafc;border-radius:8px;padding:9px 11px;margin-bottom:10px}
+  .hint b{color:#0f172a}
+  .stat{font-size:13px;line-height:2}
+  .stat span{color:#64748b}
+  .stat b{color:#111827}
+  .legend{font-size:12px;color:#475569;line-height:2;margin-top:10px;border-top:1px dashed #e5e7eb;padding-top:8px}
+  .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.08)}
+  canvas{border:1px solid #e5e7eb;border-radius:10px;background:#fff;cursor:crosshair;display:block}
+  .slider{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#475569;margin-bottom:10px}
+  input[type=range]{flex:1}
+  .badge{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:99px;background:#eef2ff;color:#3730a3;margin-left:6px}
+</style>
+</head>
+<body>
+<h1>🧭 寻路演示：一格一格看懂最短路径</h1>
+<p class="lead">
+  把地面想成<b>方格纸</b>，车只能走格子中心。<b>点格子 = 放障碍</b>，设好起点终点后点「开始」，你会看到：
+  <b>BFS</b> 像水一样一圈圈漫开，第一次碰到终点就是最短路径；<b>A*</b> 会优先朝终点方向漫，走得更少。
+</p>
+
+<div class="wrap">
+  <div class="panel controls">
+    <div class="hint">
+      <b>怎么玩：</b><br>
+      1. 直接<b>拖动鼠标</b>在格子上画障碍（右键擦掉）<br>
+      2. 点「<b>设起点</b>」再点格子 / 「<b>设终点</b>」再点格子<br>
+      3. 选 BFS 或 A*，点「<b>开始搜索</b>」看动画<br>
+      4. 点「<b>单步</b>」可以一步一步看
+    </div>
+    <div class="row">
+      <button id="b_start" class="on">① 画障碍</button>
+      <button id="b_setstart">② 设起点</button>
+      <button id="b_setgoal">③ 设终点</button>
+    </div>
+    <div class="row">
+      <button id="b_bfs" class="on">BFS（水漫式）</button>
+      <button id="b_astar">A*（聪明式）</button>
+    </div>
+    <div class="row">
+      <button id="b_run" class="primary">▶ 开始搜索</button>
+      <button id="b_step">单步</button>
+      <button id="b_clear">清空路径</button>
+      <button id="b_reset">全部重置</button>
+    </div>
+    <div class="slider">速度 <input type="range" id="speed" min="1" max="60" value="24" /> <span id="spdTxt">24</span> 格/秒</div>
+    <div class="stat" id="stat">
+      <span>状态：</span><b id="s_state">等待开始</b><br>
+      <span>已探索格子：</span><b id="s_visit">0</b><br>
+      <span>路径长度：</span><b id="s_path">—</b><br>
+      <span>需要转弯：</span><b id="s_turn">—</b> 次
+    </div>
+    <div class="legend">
+      <span class="sw" style="background:#1f2937"></span>障碍物（车不能进）<br>
+      <span class="sw" style="background:#22c55e"></span>起点 &nbsp; <span class="sw" style="background:#ef4444"></span>终点<br>
+      <span class="sw" style="background:#bfdbfe"></span>搜索探索过的格子（颜色越深=越晚探索）<br>
+      <span class="sw" style="background:#f59e0b"></span>最终路径<br>
+      <span class="sw" style="background:#e5e7eb"></span>没走到的格子
+    </div>
+  </div>
+
+  <div class="panel">
+    <canvas id="cv" width="864" height="576"></canvas>
+    <div class="hint" style="margin:10px 0 0">
+      <b>看懂这三件事就够了：</b>
+      ① 浅蓝色是算法"探查过"的格子，探索得越少 = 算法越聪明；
+      ② 橙色是最后选出的路，它的<b>格子数就是最短步数</b>（BFS 保证最短，A* 也一样只是更快）；
+      ③ 转弯统计告诉你这条路要拐几次——真实小车上拐弯最费时间，所以"格子少"不等于"跑得快"。
+    </div>
+  </div>
+</div>
+
+<script>
+var COLS = 24, ROWS = 16, CELL = 36;
+var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+var grid = [], start = {x:2, y:13}, goal = {x:21, y:2};
+var mode = 'wall', algo = 'bfs';
+var visited = [], visitOrder = {}, path = [], timer = null, order = 0, frontier = null, stats = null;
+
+function initGrid(){
+  grid = [];
+  for (var y=0;y<ROWS;y++){ var row=[]; for (var x=0;x<COLS;x++) row.push(0); grid.push(row); }
+}
+function clearSearch(){ visitOrder={}; order=0; path=[]; frontier=null; stats=null; stopTimer(); draw(); upd('等待开始',0,'—','—'); }
+function resetAll(){ initGrid(); start={x:2,y:13}; goal={x:21,y:2}; clearSearch(); }
+
+function stopTimer(){ if (timer){ clearInterval(timer); timer=null; } }
+function upd(state, v, p, t){
+  document.getElementById('s_state').textContent = state;
+  document.getElementById('s_visit').textContent = v;
+  document.getElementById('s_path').textContent = p;
+  document.getElementById('s_turn').textContent = t;
+}
+
+/* ---------- 画图 ---------- */
+function draw(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  for (var y=0;y<ROWS;y++) for (var x=0;x<COLS;x++){
+    var px=x*CELL, py=y*CELL;
+    var c = '#e5e7eb';
+    if (visitOrder[x+','+y] !== undefined){
+      var a = visitOrder[x+','+y] / Math.max(1, order);
+      c = 'rgba(59,130,246,' + (0.18 + 0.55*a) + ')';
+    }
+    if (grid[y][x] === 1) c = '#1f2937';
+    ctx.fillStyle = c; ctx.fillRect(px,py,CELL,CELL);
+    ctx.strokeStyle = '#f1f5f9'; ctx.strokeRect(px+0.5,py+0.5,CELL-1,CELL-1);
+  }
+  // 路径
+  if (path.length){
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 6; ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.beginPath();
+    path.forEach(function(p,i){ var cx=p.x*CELL+CELL/2, cy=p.y*CELL+CELL/2;
+      if (i===0) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy); });
+    ctx.stroke();
+  }
+  // 起点终点
+  function dot(p, color, label){
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(p.x*CELL+CELL/2, p.y*CELL+CELL/2, CELL*0.33, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(label, p.x*CELL+CELL/2, p.y*CELL+CELL/2+1);
+  }
+  dot(start,'#22c55e','起'); dot(goal,'#ef4444','终');
+}
+
+/* ---------- 算法（都做成"可单步"的生成器式） ---------- */
+function neighbors(x,y,diag){
+  var d = diag ? [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]
+               : [[1,0],[-1,0],[0,1],[0,-1]];
+  var out=[];
+  d.forEach(function(v){ var nx=x+v[0], ny=y+v[1];
+    if (nx>=0&&nx<COLS&&ny>=0&&ny<ROWS&&grid[ny][nx]!==1) out.push({x:nx,y:ny}); });
+  return out;
+}
+function makeBFS(){
+  var q=[{x:start.x,y:start.y}], prev={}, seen={};
+  seen[start.x+','+start.y]=1;
+  return function step(){
+    if (!q.length) return {done:true, found:false};
+    var cur = q.shift();
+    visitOrder[cur.x+','+cur.y] = ++order;
+    if (cur.x===goal.x && cur.y===goal.y) return {done:true, found:true, prev:prev, cur:cur};
+    neighbors(cur.x,cur.y,false).forEach(function(n){
+      var k=n.x+','+n.y;
+      if (!seen[k]){ seen[k]=1; prev[k]=cur; q.push(n); }
+    });
+    return {done:false, explored:order};
+  };
+}
+function makeAStar(diag, turnPenalty){
+  function h(x,y){ return Math.abs(x-goal.x)+Math.abs(y-goal.y); }
+  var open=[{x:start.x,y:start.y,g:0,f:h(start.x,start.y),dir:null}];
+  var best={}, prev={};
+  best[start.x+','+start.y]=0;
+  return function step(){
+    if (!open.length) return {done:true, found:false};
+    open.sort(function(a,b){ return a.f-b.f; });
+    var cur = open.shift();
+    visitOrder[cur.x+','+cur.y] = ++order;
+    if (cur.x===goal.x && cur.y===goal.y) return {done:true, found:true, prev:prev, cur:cur};
+    neighbors(cur.x,cur.y,diag).forEach(function(n){
+      var nd = {x:n.x-cur.x, y:n.y-cur.y};
+      var cost = (Math.abs(nd.x)+Math.abs(nd.y)===2) ? 1.414 : 1;
+      if (turnPenalty && cur.dir && (cur.dir.x!==nd.x || cur.dir.y!==nd.y)) cost += 0.6;
+      var ng = cur.g + cost, k = n.x+','+n.y;
+      if (ng < (best[k]===undefined?1e9:best[k])){
+        best[k]=ng; prev[k]={x:cur.x,y:cur.y};
+        open.push({x:n.x,y:n.y,g:ng,f:ng+h(n.x,n.y),dir:nd});
+      }
+    });
+    return {done:false, explored:order};
+  };
+}
+
+function tracePath(prev, end){
+  var p=[], k=end.x+','+end.y, cur=end;
+  while (cur){ p.push({x:cur.x,y:cur.y}); cur = prev[k]; k = cur ? cur.x+','+cur.y : ''; }
+  p.reverse();
+  var turns = 0;
+  for (var i=2;i<p.length;i++){
+    var d1={x:p[i-1].x-p[i-2].x, y:p[i-1].y-p[i-2].y}, d2={x:p[i].x-p[i-1].x, y:p[i].y-p[i-1].y};
+    if (d1.x!==d2.x || d1.y!==d2.y) turns++;
+  }
+  return {path:p, turns:turns};
+}
+
+function startSearch(){
+  clearSearch();
+  frontier = (algo==='bfs') ? makeBFS() : makeAStar(true, true);
+  var speed = +document.getElementById('speed').value;
+  stopTimer();
+  timer = setInterval(function(){ if (!singleStep()) stopTimer(); }, Math.max(16, 1000/speed));
+}
+function singleStep(){
+  if (!frontier) return false;
+  var r = frontier();
+  if (r.done){
+    if (r.found){
+      var t = tracePath(r.prev, r.cur);
+      path = t.path;
+      upd('找到路径 ✅', order, path.length + ' 格（约 ' + (path.length*50) + ' mm）', t.turns);
+    } else upd('无路可走 ❌', order, '—', '—');
+    draw(); frontier = null; return false;
+  }
+  upd('搜索中…', order, '—', '—');
+  draw();
+  return true;
+}
+
+/* ---------- 交互 ---------- */
+var painting = false;
+function cellAt(ev){
+  var r = cv.getBoundingClientRect();
+  var x = Math.floor((ev.clientX-r.left)/CELL), y = Math.floor((ev.clientY-r.top)/CELL);
+  if (x<0||x>=COLS||y<0||y>=ROWS) return null;
+  return {x:x,y:y};
+}
+cv.addEventListener('mousedown', function(ev){
+  var c = cellAt(ev); if (!c) return;
+  if (mode==='start'){ if (grid[c.y][c.x]!==1){ start=c; clearSearch(); } return; }
+  if (mode==='goal'){ if (grid[c.y][c.x]!==1){ goal=c; clearSearch(); } return; }
+  painting = true; toggle(c, ev.button===2);
+});
+cv.addEventListener('mousemove', function(ev){ if (!painting) return; var c=cellAt(ev); if (c) toggle(c, ev.buttons===2); });
+window.addEventListener('mouseup', function(){ painting=false; });
+cv.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+function toggle(c, erase){
+  if ((c.x===start.x&&c.y===start.y)||(c.x===goal.x&&c.y===goal.y)) return;
+  grid[c.y][c.x] = erase ? 0 : (grid[c.y][c.x]?0:1);
+  clearSearch();
+}
+document.getElementById('b_start').onclick = function(){ mode='wall'; pick(this); };
+document.getElementById('b_setstart').onclick = function(){ mode='start'; pick(this); };
+document.getElementById('b_setgoal').onclick = function(){ mode='goal'; pick(this); };
+document.getElementById('b_bfs').onclick = function(){ algo='bfs'; pick(this); };
+document.getElementById('b_astar').onclick = function(){ algo='astar'; pick(this); };
+function pick(btn){
+  var group = btn.parentNode.querySelectorAll('button');
+  for (var i=0;i<group.length;i++) group[i].classList.remove('on');
+  btn.classList.add('on');
+}
+document.getElementById('b_run').onclick = startSearch;
+document.getElementById('b_step').onclick = function(){
+  if (!frontier) frontier = (algo==='bfs') ? makeBFS() : makeAStar(true,true);
+  singleStep();
+};
+document.getElementById('b_clear').onclick = clearSearch;
+document.getElementById('b_reset').onclick = resetAll;
+document.getElementById('speed').oninput = function(){ document.getElementById('spdTxt').textContent = this.value;
+  if (timer){ stopTimer(); startSearch(); } };
+
+/* 预置一个"工创地图"风格的障碍示例，方便直接看效果 */
+function preset(){
+  initGrid();
+  // 两个方块障碍 + 一段墙
+  [[6,4],[7,4],[8,4],[6,5],[8,5],[6,6],[7,6],[8,6]].forEach(function(p){ grid[p[1]][p[0]]=1; });
+  [[14,6],[14,7],[14,8],[14,9],[15,6],[16,6],[17,6]].forEach(function(p){ grid[p[1]][p[0]]=1; });
+  [[10,11],[11,11],[12,11],[13,11],[10,10],[13,10]].forEach(function(p){ grid[p[1]][p[0]]=1; });
+  start={x:2,y:13}; goal={x:21,y:2};
+  clearSearch();
+}
+preset();
+</script>
+</body>
+</html>
