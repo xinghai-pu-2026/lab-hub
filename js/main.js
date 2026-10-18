@@ -14,8 +14,8 @@
   const AREAS = window.WORKSPACES || window.CATEGORIES || []
   const RES = window.RESOURCES || []
 
-  /* 每个工作区一个配色（按顺序取，超过就循环） */
-  const AREA_COLORS = ['#2563eb', '#0ea5e9', '#7c3aed', '#0d9488', '#ea580c', '#0284c7']
+  /* 每个工作区一个配色（按顺序取，超过就循环；加工作区时记得也加一个颜色） */
+  const AREA_COLORS = ['#2563eb', '#0ea5e9', '#7c3aed', '#0d9488', '#ea580c', '#0284c7', '#be123c', '#65a30d']
 
   /* —— 填入站点信息 —— */
   const set = (id, v) => { const el = document.getElementById(id); if (el && v !== undefined && v !== '') el.textContent = v }

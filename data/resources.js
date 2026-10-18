@@ -36,6 +36,7 @@ window.WORKSPACES = [
   { id: 'pcb',    name: 'PCB',            icon: '🧩', desc: '原理图、元件封装、布局布线与打样制板' },
   { id: 'vision', name: '视觉',           icon: '👁️', desc: 'OpenMV / K210 / OpenCV 图像处理与识别' },
   { id: 'tools',  name: '开发环境与工具',  icon: '🧰', desc: '编译器、IDE、Git、串口与各种调试工具' },
+  { id: 'apps',   name: '小工具软件',      icon: '📦', desc: '下载器、传文件、截图、解压、系统优化等日常软件' },
   { id: 'algo',   name: '算法与仿真',      icon: '📐', desc: 'MATLAB / Simulink、刷题平台、控制算法与仿真' }
 ];
 
@@ -74,8 +75,6 @@ window.RESOURCES = [
   { name: 'Node.js 下载',               area: 'tools', url: 'https://nodejs.org/zh-cn/download' },
   { name: 'Docker Desktop',             area: 'tools', url: 'https://www.docker.com/products/docker-desktop/' },
   { name: 'MobaXterm 下载',             area: 'tools', url: 'https://mobaxterm.mobatek.net/download-home-edition.html' },
-  { name: 'Rufus U 盘启动盘',            area: 'tools', url: 'https://rufus.ie/en/' },
-  { name: 'Ventoy 下载',                area: 'tools', url: 'https://www.ventoy.net/cn/download.html' },
   { name: 'Git 简明指南',                area: 'tools', url: 'https://www.runoob.com/manual/git-guide/' },
   { name: 'GitLab 图形化使用教程',        area: 'tools', url: 'https://blog.csdn.net/AntKengElephant/article/details/82628374' },
   { name: 'GitLab 保姆级使用教程',        area: 'tools', url: 'https://blog.csdn.net/qq_59961910/article/details/138707491' },
@@ -90,6 +89,26 @@ window.RESOURCES = [
   { name: 'DeepSeek 官网',              area: 'tools', url: 'https://www.deepseek.com/' },
   { name: 'DeepSeek 开放平台',           area: 'tools', url: 'https://platform.deepseek.com/usage' },
   { name: 'Expert 电子实验室 · 学习路线',  area: 'tools', url: 'https://www.cnblogs.com/expertlab/articles/19359076' },
+
+  /* ========== 小工具软件 ========== */
+  { name: 'Gopeed 下载器',              area: 'apps', url: 'https://gopeed.com/' },
+  { name: 'Motrix 下载器',              area: 'apps', url: 'https://motrix.app/' },
+  { name: 'LocalSend 局域网传文件',      area: 'apps', url: 'https://localsend.org/' },
+  { name: 'ShareX 截图录屏',            area: 'apps', url: 'https://getsharex.com/' },
+  { name: '7-Zip 解压',                area: 'apps', url: 'https://www.7-zip.org/' },
+  { name: 'WizTree 磁盘占用分析',        area: 'apps', url: 'https://diskanalyzer.com/' },
+  { name: 'Dism++ 系统优化',            area: 'apps', url: 'https://chuyu.me/zh-Hans/', url2: 'https://github.com/Chuyu-Team/Dism-Multi-language' },
+  { name: 'FastCopy 快速复制',          area: 'apps', url: 'https://fastcopy.jp/' },
+  { name: 'KeePassXC 密码管理',         area: 'apps', url: 'https://keepassxc.org/' },
+  { name: 'Anki 记忆卡片',              area: 'apps', url: 'https://apps.ankiweb.net/' },
+  { name: 'Subtitle Edit 字幕编辑',      area: 'apps', url: 'https://www.nikse.dk/subtitleedit' },
+  { name: 'Notesnook 加密笔记',         area: 'apps', url: 'https://notesnook.com/' },
+  { name: 'BleachBit 垃圾清理',         area: 'apps', url: 'https://www.bleachbit.org/' },
+  { name: 'OCRmyPDF PDF 文字识别',      area: 'apps', url: 'https://ocrmypdf.readthedocs.io/', url2: 'https://github.com/ocrmypdf/OCRmyPDF' },
+  { name: 'Rufus U 盘启动盘',           area: 'apps', url: 'https://rufus.ie/en/' },
+  { name: 'Ventoy 多系统启动盘',         area: 'apps', url: 'https://www.ventoy.net/cn/' },
+  { name: 'PanDown 网盘下载',           area: 'apps', url: 'https://www.pandown.org/pd/PanDown.php' },
+  { name: '油小猴 网盘直链助手',         area: 'apps', url: 'https://www.youxiaohou.com/install.html' },
 
   /* ========== 单片机 ========== */
   { name: '意法半导体 ST 官网',           area: 'mcu', url: 'https://www.st.com.cn/content/st_com/zh.html' },
