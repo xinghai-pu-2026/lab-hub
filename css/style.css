@@ -222,10 +222,62 @@ body {
   background: #fff;
 }
 
+/* ---------- 工作区区块（页面主体：每个工作区一块） ---------- */
+.areas { display: flex; flex-direction: column; gap: 30px; }
+
+/* 点顶部导航跳过来时，别被吸顶导航挡住标题 */
+.area { scroll-margin-top: 76px; }
+
+.area-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--area-color, var(--primary));  /* 每个工作区一条专属色 */
+  box-shadow: var(--shadow);
+}
+.area-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+.area-titles { flex: 1; min-width: 0; }
+.area-name { font-size: 17px; font-weight: 800; color: var(--area-color, var(--primary)); }
+.area-desc { font-size: 12.5px; color: var(--text-light); margin-top: 2px; }
+.area-count {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-light);
+  background: #f1f5f9;
+  padding: 3px 11px;
+  border-radius: 999px;
+}
+
+/* 卡片左侧色条跟着工作区颜色走 */
+.area .card::before { background: var(--area-color, var(--primary)); }
+
+/* 空工作区占位 */
+.area-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-light);
+  font-size: 13.5px;
+  padding: 24px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+}
+
 /* ---------- 手机适配 ---------- */
 @media (max-width: 640px) {
   .hero { padding: 44px 16px 28px; }
   .content { padding: 6px 14px 50px; }
   .cards { grid-template-columns: 1fr; }
-  .nav-links { display: none; }   /* 手机隐藏分类快捷链接，用 chips 即可 */
+  .nav-links { display: none; }   /* 手机隐藏工作区快捷链接，用 chips 即可 */
+  .areas { gap: 22px; }
+  .area-head { padding: 8px 12px; gap: 9px; }
+  .area-icon { font-size: 22px; }
+  .area-name { font-size: 15.5px; }
+  .area-desc { font-size: 12px; }
 }

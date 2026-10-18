@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>学长资源站</title>
-  <meta name="description" content="实验室软件与学习资料分享站" />
+  <title>电控组资源站</title>
+  <meta name="description" content="电控组学习资料与工具分享站，按工作区整理" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div class="nav-inner">
       <a class="brand" href="#top">
         <span class="brand-logo">🧭</span>
-        <span class="brand-name" id="nav-name">学长资源站</span>
+        <span class="brand-name" id="nav-name">电控组资源站</span>
       </a>
       <nav class="nav-links" id="nav-links"></nav>
     </div>
@@ -22,23 +22,23 @@
 
   <!-- ======= 首页大标题区 ======= -->
   <section class="hero" id="top">
-    <h1 class="hero-title" id="site-name">学长资源站</h1>
-    <p class="hero-sub" id="site-sub">给实验室学弟学妹的软件与学习资料 · 全部免费</p>
+    <h1 class="hero-title" id="site-name">电控组资源站</h1>
+    <p class="hero-sub" id="site-sub">按工作区整理的电控学习资料与工具</p>
     <p class="hero-notice" id="site-notice"></p>
     <div class="hero-search">
-      <input type="search" id="search-box" placeholder="🔍 搜索资源，比如：Keil、STM32、Python…" autocomplete="off" />
+      <input type="search" id="search-box" placeholder="🔍 搜索资源，比如：Keil、STM32、立创EDA、OpenMV…" autocomplete="off" />
     </div>
-    <!-- 分类按钮会自动生成 -->
+    <!-- 工作区按钮会自动生成 -->
     <div class="cat-chips" id="cat-chips"></div>
   </section>
 
-  <!-- ======= 资源卡片区 ======= -->
+  <!-- ======= 工作区区块区（每个工作区独立成一块） ======= -->
   <main class="content">
     <div class="section-title">
-      <h2>资源列表</h2>
+      <h2>工作区</h2>
       <span class="section-count" id="res-count"></span>
     </div>
-    <div class="cards" id="cards"></div>
+    <div class="areas" id="cards"></div>
 
     <!-- 无结果提示（搜索/筛选时出现） -->
     <div class="empty hidden" id="empty">
@@ -48,7 +48,7 @@
 
   <!-- ======= 页脚 ======= -->
   <footer class="footer">
-    <p id="footer-text">学长资源站 · 免费分享给实验室的学弟学妹</p>
+    <p id="footer-text">电控组资源站 · 免费分享给实验室的学弟学妹</p>
   </footer>
 
   <!-- 数据文件：改 data/resources.js 就能加内容（详见 README.md） -->
