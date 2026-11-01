@@ -141,6 +141,10 @@ window.RESOURCES = [
   { name: 'YDLIDAR X3 Pro 激光雷达',     area: 'vision', url: 'https://www.yahboom.com/study/YDLIDAR-X3' },
   { name: '八路灰度巡线模块',             area: 'vision', url: 'https://www.yahboom.com/study_module/8-GS' },
   { name: '8 路灰度巡线动态阈值方案',      area: 'vision', url: 'https://blog.csdn.net/2301_78814366/article/details/150100225' },
+  { name: 'OpenCV 项目实战全套（组内资料）', area: 'vision', size: '574 MB',
+    desc: '29 章课件与实战源码：DNN、目标追踪、人脸关键点、疲劳检测、停车位定位、文档扫描 OCR',
+    note: '组内资料，存放在私有仓库：需被邀请为协作者才能下载，未登录打开会 404',
+    url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases' },
 
   /* ========== 算法与仿真 ========== */
   { name: '洛谷',                       area: 'algo', url: 'https://www.luogu.com.cn/' },
