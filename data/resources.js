@@ -143,8 +143,9 @@ window.RESOURCES = [
   { name: '8 路灰度巡线动态阈值方案',      area: 'vision', url: 'https://blog.csdn.net/2301_78814366/article/details/150100225' },
   { name: 'OpenCV 项目实战全套（组内资料）', area: 'vision', size: '574 MB',
     desc: '29 章课件与实战源码：DNN、目标追踪、人脸关键点、疲劳检测、停车位定位、文档扫描 OCR',
-    note: '组内资料，存放在私有仓库：需被邀请为协作者才能下载，未登录打开会 404',
-    url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases' },
+    note: '组内资料：需在浏览器里登录 GitHub 且拥有 lab-hub-files 权限，否则返回 404',
+    url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/opencv-work-v1/opencv_work.zip',
+    dl: true },
 
   /* ========== 算法与仿真 ========== */
   { name: '洛谷',                       area: 'algo', url: 'https://www.luogu.com.cn/' },
