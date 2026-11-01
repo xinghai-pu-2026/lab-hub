@@ -182,5 +182,17 @@ window.RESOURCES = [
   { name: '蓝桥杯 Keil C51 环境包', area: 'algo', size: '88 MB', desc: '蓝桥杯单片机组用的 Keil C51 环境与配套文件', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/materials-2026-11/lanqiao-keilc51.zip', dl: true },
   { name: '蓝桥杯资料包', area: 'algo', size: '2.3 MB', desc: '蓝桥杯赛前资料', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/materials-2026-11/lanqiao-mydoc.zip', dl: true },
 
+  /* ========== 2026-11 单片机大资料包（mcu-pack-2026-11）========== */
+  { name: '张大头 ZDT-XS 步进电机 · 例程 STM32F407', area: 'mcu', size: '1.29 GB', desc: 'ZDT_XS 第二代闭环步进电机资料第一部分：STM32F407 全套例程，141 个文件', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/zdt-xs-part1-stm32f407.zip', dl: true },
+  { name: '张大头 ZDT-XS 步进电机 · 文档与工具', area: 'mcu', size: '1.38 GB', desc: '第二部分：说明书、上位机、3D 装配模型、固件更新教程、Arduino/树莓派/Modbus 例程', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/zdt-xs-part2-rest.zip', dl: true },
+  { name: '张大头步进电机 · 配套程序与其余例程', area: 'mcu', size: '1.69 GB', desc: '2-配套程序、F103 例程压缩包、MSPM0G3507 例程、说明书、上位机、3D 模型等补充资料', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/zdt-aux-and-examples.zip', dl: true },
+  { name: 'MSPM0G3507 开发工具（含 MDK539）', area: 'mcu', size: '1.60 GB', desc: '立创地猛星 MSPM0G3507 开发工具合集：Keil MDK 5.39 安装包、串口烧录工具等', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/mspm0g3507-dev-tools.zip', dl: true },
+  { name: '立创地猛星 MSPM0G3507 开发板资料', area: 'mcu', size: '688 MB', desc: '开发板例程、文档与 SDK，已去除重复的 MDK539 安装包', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/lc-dmx-board-materials.zip', dl: true },
+  { name: 'MSPM0 TI 环境配置', area: 'mcu', size: '357 MB', desc: 'TI CCS 与 SysConfig 环境配置相关文件', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/mspm0-ti-env-setup.zip', dl: true },
+  { name: 'WHEELTEC C07A 核心板（MSPM0G3507）附送资料', area: 'mcu', size: '51.8 MB', desc: 'WHEELTEC C07A 核心板配套资料', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/wheeltec-c07a-mspm0.zip', dl: true },
+  { name: 'MSPM0G3507 其他补充资料', area: 'mcu', size: '4.3 MB', desc: '3507 相关补充文档', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/mspm0-3507-misc.zip', dl: true },
+  { name: 'J-Link 调试器驱动', area: 'tools', size: '81 MB', desc: 'SEGGER J-Link 驱动与配套工具', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/jlink-driver.zip', dl: true },
+  { name: 'JY61P 三维姿态传感器资料', area: 'tools', size: '0.4 MB', desc: 'JY61P IMU 姿态模块使用资料', note: '组内资料，需登录 GitHub 且有权限', url: 'https://github.com/xinghai-pu-2026/lab-hub-files/releases/download/mcu-pack-2026-11/jy61p-imu.zip', dl: true },
+
   /* ===== 想加自己的资源，照上面任何一行复制改写即可 ===== */
 ];
